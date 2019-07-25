@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>用户注册</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <!-- 注意:如果你直接复制所有代码到本地,上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<div class="layui-container" >
+    <form class="layui-form" action="/userClient/save" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名:</label>
+            <div class="layui-inline">
+                <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码:</label>
+            <div class="layui-inline">
+                <input type="password" name="password" lay-verify="price" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称:</label>
+            <div class="layui-inline">
+                <input type="text" name="nickname"   autocomplete="off" class="layui-input">
+            </div>
+        </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">性别:</label>
+             <div class="layui-inline">
+                   <select name="gender" >
+                     <option value="">请选择</option>
+                     <option value="0">男</option>
+                     <option value="1">女</option>
+                   </select>
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">电话:</label>
+             <div class="layui-inline">
+                 <input type="text" name="telephone"  autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">地址:</label>
+             <div class="layui-inline">
+                 <input type="text" name="address"   autocomplete="off" class="layui-input">
+             </div>
+         </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit="" lay-filter="demo2" style="margin-left: 160px;">提交</button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'element'], function(){
+        var form = layui.form;
+        var element = layui.element;
+        //自定义验证规则
+        form.verify({
+            price: [/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/, "请输入6-18位由字母和数字组成的密码"]
+        });
+    });
+</script>
+</body>
+</html>

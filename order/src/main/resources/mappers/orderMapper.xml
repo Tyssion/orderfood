@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qing.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.qing.entity.Order">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="date" jdbcType="TIMESTAMP" property="date"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <!-- 映射menu -->
+        <association property="menu" javaType="com.qing.entity.Menu">
+            <id property="id" column="mid"/>
+            <result property="name" column="name"/>
+            <result property="price" column="price"/>
+            <result property="flavor" column="flavor"/>
+        </association>
+        <!-- 映射user -->
+        <association property="user" javaType="com.qing.entity.User">
+            <id property="id" column="uid"/>
+            <result property="nickname" column="nickname"/>
+            <result property="telephone" column="telephone"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllByUid" parameterType="Integer" resultMap="BaseResultMap">
+        select o.*,m.*
+        from t_order o,t_menu m
+        where o.mid = m.id and o.uid = #{uid}
+    </select>
+
+    <insert id="save" parameterType="com.qing.entity.Order" >
+       insert into t_order(uid,mid,aid,date,state) values(#{user.id},#{menu.id},#{admin.id},#{date},0)
+    </insert>
+
+    <select id="findAllByState" resultMap="BaseResultMap">
+        select *
+        from t_order o,t_user u,t_menu m
+        where o.mid = m.id and o.uid = u.id and o.state = 0
+    </select>
+
+    <update id="updateState" parameterType="com.qing.entity.Order">
+       update t_order set state = 1 where id = #{id}
+    </update>
+
+    <delete id="deleteByMid" parameterType="Integer">
+		delete from t_order where mid = #{mid}
+	</delete>
+
+    <delete id="deleteByUid" parameterType="Integer">
+		delete from t_order where uid = #{uid}
+	</delete>
+
+</mapper>

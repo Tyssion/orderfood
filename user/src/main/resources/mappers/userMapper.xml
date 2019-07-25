@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qing.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.qing.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="register_date" jdbcType="TIMESTAMP" property="registerDate"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,username,password,nickname,gender,telephone,register_date,address
+    </sql>
+
+    <select id="findById" parameterType="integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_user
+        where id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.qing.entity.User" >
+        insert into t_user(username,password,nickname,gender,telephone,register_date,address) values(#{username},#{password},#{nickname},#{gender},#{telephone},#{registerDate},#{address})
+    </insert>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_user
+    </select>
+
+    <update id="update" parameterType="com.qing.entity.User">
+        update t_user
+        <set>
+            <if test="username !='' and username !=null">
+                username = #{username},
+            </if>
+            <if test="password !='' and password !=null">
+                password = #{password},
+            </if>
+            <if test="nickname !='' and nickname !=null">
+                nickname = #{nickname},
+            </if>
+            <if test="gender !='' and gender !=null">
+                gender = #{gender},
+            </if>
+            <if test="telephone !='' and telephone !=null">
+                telephone = #{telephone},
+            </if>
+            <if test="registerDate !='' and registerDate !=null">
+                register_date = #{registerDate},
+            </if>
+            <if test="address !='' and address !=null">
+                address = #{address}
+            </if>
+        </set>
+        where id= #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="integer" >
+      delete from t_user where id = #{id}
+    </delete>
+</mapper>

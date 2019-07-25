@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>添加菜单</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <!-- 注意:如果你直接复制所有代码到本地,上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<div class="layui-container" >
+    <form class="layui-form" action="/menuClient/save" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜名:</label>
+            <div class="layui-inline">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入菜名" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价:</label>
+            <div class="layui-inline">
+                <input type="text" name="price" lay-verify="price" placeholder="请输入单价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">口味:</label>
+            <div class="layui-inline">
+                <input type="text" name="flavor" lay-verify="required" placeholder="请输入口味" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类:</label>
+            <div class="layui-inline">
+                <select name="type.id">
+                    <option th:each="type:${list}" th:text="${type.name}" th:value="${type.id}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit="" lay-filter="demo2" style="margin-left: 160px;">提交</button>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'element'], function(){
+        var form = layui.form;
+        var element = layui.element;
+        //自定义验证规则
+        form.verify({
+            price: [/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, "请输入正确的价格"]
+        });
+    });
+</script>
+</body>
+</html>
